@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import Users from './user/pages/Users';
-import NewProduct from './products/pages/NewProduct';
+import Users from './user/pages/Users.component';
+import NewProduct from './products/pages/NewProduct.component';
 
 function App() {
   return (
