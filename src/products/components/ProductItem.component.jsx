@@ -1,4 +1,5 @@
 import Card from '../../shared/components/UIElements/Card.component';
+import Button from '../../shared/components/FormElements/Button.component';
 
 import './ProductItem.styles.css';
 
@@ -11,11 +12,14 @@ const ProductItem = ({ product }) => {
         </div>
         <div className="product-item__info">
           <h2>{product.name}</h2>
-          <h3>{product.quantity}</h3>
+          <h4>
+            Prix: {new Intl.NumberFormat('fr-SN').format(product.price)} F CFA
+          </h4>
+          <h4>Quantite: {product.quantity}</h4>
         </div>
         <div className="product-item__actions">
-          <button>MODIFIER</button>
-          <button>SUPPRIMER</button>
+          <Button to={`/products/${product.id}`}>MODIFIER</Button>
+          <Button danger>SUPPRIMER</Button>
         </div>
       </Card>
     </li>
