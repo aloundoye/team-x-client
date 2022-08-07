@@ -1,53 +1,19 @@
-import { useCallback, useReducer } from "react";
 import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
+import { useForm } from "../../shared/hooks/form-hook";
 
 import Input from "../../shared/components/FormElements/Input.component";
 import Button from "../../shared/components/FormElements/Button.component";
 
 import "./ProductForm.styles.css";
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        isValid: formIsValid,
-      };
-    default:
-      return state;
-  }
+const initialStates = {
+  name: { value: "", isValid: false },
+  price: { value: 0, isValid: false },
+  quantity: { value: 0, isValid: false },
 };
 
 const NewProduct = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
-      name: { value: "", isValid: false },
-      price: { value: "", isValid: false },
-      quantity: { value: "", isValid: false },
-    },
-    isValid: false,
-  });
-
-  const inputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: "INPUT_CHANGE",
-      value: value,
-      isValid: isValid,
-      inputId: id,
-    });
-  }, []);
+  const [formState, inputHandler] = useForm(initialStates, false);
 
   const productSubmitHandler = (event) => {
     event.preventDefault();
@@ -68,7 +34,9 @@ const NewProduct = () => {
       <Input
         id="price"
         element="input"
-        type="text"
+        type="number"
+        min="5"
+        step="any"
         label="Prix"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Veillez entrer un prix valide"
