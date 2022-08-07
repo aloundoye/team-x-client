@@ -1,17 +1,20 @@
-import { useParams } from 'react-router-dom';
-import Button from '../../shared/components/FormElements/Button.component';
-import Input from '../../shared/components/FormElements/Input.component';
-import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
+import { useParams } from "react-router-dom";
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
+
+import Button from "../../shared/components/FormElements/Button.component";
+import Input from "../../shared/components/FormElements/Input.component";
+
+import "./ProductForm.styles.css";
 
 const DUMMY_PRODUCTS = [
   {
-    id: 'p1',
-    name: 'VANS',
-    price: '50000',
+    id: "p1",
+    name: "VANS",
+    price: "50000",
     quantity: 5,
-    creator: 'u1',
+    creator: "u1",
     imageUrl:
-      'https://www.tradeinn.com/f/125/1252953/vans-old-skool-trainers.jpg',
+      "https://www.tradeinn.com/f/125/1252953/vans-old-skool-trainers.jpg",
   },
 ];
 
@@ -63,7 +66,9 @@ const UpdateProduct = () => {
         onInput={() => {}}
         valid={true}
       />
-      <Button type="submit">AJOUTER PRODUIT</Button>
+      <Button type="submit" disabled={true}>
+        MODIFIER PRODUIT
+      </Button>
     </form>
   );
 };

@@ -1,14 +1,14 @@
-import { useCallback, useReducer } from 'react';
-import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
+import { useCallback, useReducer } from "react";
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 
-import Input from '../../shared/components/FormElements/Input.component';
-import Button from '../../shared/components/FormElements/Button.component';
+import Input from "../../shared/components/FormElements/Input.component";
+import Button from "../../shared/components/FormElements/Button.component";
 
-import './NewProduct.styles.css';
+import "./ProductForm.styles.css";
 
 const formReducer = (state, action) => {
   switch (action.type) {
-    case 'INPUT_CHANGE':
+    case "INPUT_CHANGE":
       let formIsValid = true;
       for (const inputId in state.inputs) {
         if (inputId === action.inputId) {
@@ -33,16 +33,16 @@ const formReducer = (state, action) => {
 const NewProduct = () => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
-      name: { value: '', isValid: false },
-      price: { value: '', isValid: false },
-      quantity: { value: '', isValid: false },
+      name: { value: "", isValid: false },
+      price: { value: "", isValid: false },
+      quantity: { value: "", isValid: false },
     },
     isValid: false,
   });
 
   const inputHandler = useCallback((id, value, isValid) => {
     dispatch({
-      type: 'INPUT_CHANGE',
+      type: "INPUT_CHANGE",
       value: value,
       isValid: isValid,
       inputId: id,
