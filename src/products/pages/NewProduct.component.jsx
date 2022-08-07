@@ -4,7 +4,6 @@ import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
 import Input from '../../shared/components/FormElements/Input.component';
 import Button from '../../shared/components/FormElements/Button.component';
 
-
 import './NewProduct.styles.css';
 
 const formReducer = (state, action) => {
@@ -49,10 +48,14 @@ const NewProduct = () => {
       inputId: id,
     });
   }, []);
-  
+
+  const productSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+  };
 
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={productSubmitHandler}>
       <Input
         id="name"
         element="input"
@@ -80,7 +83,9 @@ const NewProduct = () => {
         errorText="Veillez entrer une quantite valide"
         onInput={inputHandler}
       />
-      <Button type='submit' disabled={!formState.isValid}>AJOUTER PRODUIT</Button>
+      <Button type="submit" disabled={!formState.isValid}>
+        AJOUTER PRODUIT
+      </Button>
     </form>
   );
 };
