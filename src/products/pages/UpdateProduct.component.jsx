@@ -7,6 +7,7 @@ import Input from '../../shared/components/FormElements/Input.component';
 
 import './ProductForm.styles.css';
 import { useEffect, useState } from 'react';
+import Card from '../../shared/components/UIElements/Card.component';
 
 const DUMMY_PRODUCTS = [
   {
@@ -35,14 +36,16 @@ const UpdateProduct = () => {
 
   const identifiedProduct = DUMMY_PRODUCTS.find((p) => p.id === productId);
   useEffect(() => {
-    setFormData(
-      {
-        name: { value: identifiedProduct.name, isValid: true },
-        price: { value: identifiedProduct.price, isValid: true },
-        quantity: { value: identifiedProduct.quantity, isValid: true },
-      },
-      true
-    );
+    if (identifiedProduct) {
+      setFormData(
+        {
+          name: { value: identifiedProduct.name, isValid: true },
+          price: { value: identifiedProduct.price, isValid: true },
+          quantity: { value: identifiedProduct.quantity, isValid: true },
+        },
+        true
+      );
+    }
 
     setIsLoading(false);
   }, [setFormData, identifiedProduct]);
@@ -52,15 +55,17 @@ const UpdateProduct = () => {
     console.log(formState.inputs);
   };
 
-  if (isLoading) {
+  if (!identifiedProduct) {
     return (
       <div className="center">
-        <h2>Produit non trouver</h2>
+        <Card>
+          <h2>Produit non trouver</h2>
+        </Card>
       </div>
     );
   }
 
-  if (!formState.inputs.name.value) {
+  if (isLoading) {
     return (
       <div className="center">
         <h2>Loading...</h2>
