@@ -69,6 +69,28 @@ const Auth = () => {
     let data;
     setIsLoading(true);
     if (isLoginMode) {
+      try {
+        const response = await fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        });
+
+        data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+
+        auth.login();
+      } catch (err) {
+        setError(err.message || 'Une erreur inconnue est survenue!');
+      }
     } else {
       try {
         const response = await fetch('http://localhost:5000/api/users/signup', {
@@ -90,22 +112,21 @@ const Auth = () => {
           throw new Error(data.message);
         }
 
-        setIsLoading(false);
         auth.login();
       } catch (err) {
-        setIsLoading(false);
         setError(err.message || 'Une erreur inconnue est survenue!');
       }
     }
+    setIsLoading(false);
   };
 
-  const errorHandler = ()=>{
+  const errorHandler = () => {
     setError(null);
-  }
+  };
 
   return (
     <>
-      <ErrorModal error={error} onClear={errorHandler}/>
+      <ErrorModal error={error} onClear={errorHandler} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>{!isLoginMode ? 'Inscription' : 'Connexion'}</h2>
