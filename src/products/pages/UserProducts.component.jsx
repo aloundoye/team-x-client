@@ -6,14 +6,13 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal.component'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner.component';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 
-
 const UserProducts = () => {
   const userId = useParams().userId;
   const [loadedProducts, setLoadedProducts] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchUserProducts = async () => {
       try {
         const data = await sendRequest(
           `http://localhost:5000/api/products/user/${userId}`
@@ -22,7 +21,7 @@ const UserProducts = () => {
       } catch (err) {}
     };
 
-    fetchUsers();
+    fetchUserProducts();
   }, []);
 
   return (

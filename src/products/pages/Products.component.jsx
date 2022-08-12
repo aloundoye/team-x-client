@@ -10,14 +10,14 @@ const Products = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchProducts = async () => {
       try {
         const data = await sendRequest('http://localhost:5000/api/products');
         setLoadedProducts(data.products);
       } catch (err) {}
     };
 
-    fetchUsers();
+    fetchProducts();
   }, []);
 
   return (
