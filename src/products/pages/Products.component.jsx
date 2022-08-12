@@ -28,7 +28,7 @@ const Products = () => {
           <LoadingSpinner asOverlay />
         </div>
       )}
-      {!isLoading && loadedProducts && <ProductList items={loadedProducts} error={error}/>}
+      {!isLoading && loadedProducts && <ProductList products={loadedProducts} error={error}/>}
     </>
   );
 };

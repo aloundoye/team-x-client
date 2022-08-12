@@ -4,7 +4,7 @@ import Card from '../../shared/components/UIElements/Card.component';
 import './UsersList.styles.css';
 
 const UsersList = (props) => {
-  if (props.items.length === 0 || props.error) {
+  if (props.users.length === 0 || props.error) {
     return (
       <div className="center">
         <Card>
@@ -16,7 +16,7 @@ const UsersList = (props) => {
 
   return (
     <ul className="users-list">
-      {props.items.map((user) => {
+      {props.users.map((user) => {
         return <UserItem key={user.id} user={user} />;
       })}
     </ul>

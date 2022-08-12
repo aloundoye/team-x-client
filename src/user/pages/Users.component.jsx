@@ -29,7 +29,7 @@ const Users = () => {
         </div>
       )}
       {!isLoading && loadedUsers && (
-        <UsersList items={loadedUsers} error={error} />
+        <UsersList users={loadedUsers} error={error} />
       )}
     </>
   );

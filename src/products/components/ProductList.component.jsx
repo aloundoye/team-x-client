@@ -3,8 +3,8 @@ import ProductItem from './ProductItem.component';
 
 import './ProductList.styles.css';
 
-const ProductList = ({ items, error }) => {
-  if (items.length === 0 || error) {
+const ProductList = ({ products, error }) => {
+  if (products.length === 0 || error) {
     return (
       <div className="product-list center">
         <Card>
@@ -16,7 +16,7 @@ const ProductList = ({ items, error }) => {
 
   return (
     <ul className="product-list">
-      {items.map((product) => (
+      {products.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}
     </ul>
