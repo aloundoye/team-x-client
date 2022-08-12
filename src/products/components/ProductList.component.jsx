@@ -3,9 +3,8 @@ import ProductItem from './ProductItem.component';
 
 import './ProductList.styles.css';
 
-const ProductList = ({ items }) => {
-  console.log(items);
-  if (items.length === 0) {
+const ProductList = ({ items, error }) => {
+  if (items.length === 0 || error) {
     return (
       <div className="product-list center">
         <Card>

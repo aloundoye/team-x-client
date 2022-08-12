@@ -22,20 +22,17 @@ export const useHttpClient = () => {
 
         const data = await response.json();
 
-        activeHttpRequests.current = activeHttpRequests.current.filter(
-          (requestController) => requestController !== httpAbortController
-        );
-
         if (!response.ok) {
           throw new Error(data.message);
         }
+        setIsLoading(false);
+
         return data;
       } catch (err) {
+        setIsLoading(false);
         setError(err.message || 'Une erreur inconnue est survenue!');
         throw err;
       }
-
-      setIsLoading(false);
     },
     []
   );
@@ -43,14 +40,6 @@ export const useHttpClient = () => {
   const clearError = () => {
     setError(null);
   };
-
-  useEffect(() => {
-    return () => {
-      activeHttpRequests.current.forEach((abortController) =>
-        abortController.abort()
-      );
-    };
-  }, []);
 
   return { isLoading, error, sendRequest, clearError };
 };
