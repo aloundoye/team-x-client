@@ -12,15 +12,18 @@ import Products from './products/pages/Products.component';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
 
   const navigate = useNavigate();
 
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   }, []);
 
   let routes;
@@ -50,15 +53,13 @@ function App() {
   }
 
   useEffect(() => {
-    if (isLoggedIn){
-       return navigate("/");
+    if (isLoggedIn) {
+      return navigate('/');
     }
- },[isLoggedIn]);
+  }, [isLoggedIn]);
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, userId }}>
       <Routes>
         <Route path="/" element={<Layout />}>
           {routes}
