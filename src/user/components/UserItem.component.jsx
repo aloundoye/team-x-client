@@ -6,7 +6,7 @@ import Card from '../../shared/components/UIElements/Card.component';
 import './UserItem.styles.css';
 
 const UserItem = (props) => {
-  const { id, image, name, productsCount } = props.user;
+  const { id, image, firstname,lastname, products } = props.user;
 
   return (
     <li className="user-item">
@@ -16,9 +16,9 @@ const UserItem = (props) => {
             <Avatar image={image} />
           </div>
           <div className="user-item__info">
-            <h2>{name}</h2>
+            <h2>{`${firstname} ${lastname}` }</h2>
             <h3>
-              {productsCount} {productsCount <= 1 ? 'Produit' : 'Produits'}
+              {products.length} {products.length <= 1 ? 'Produit' : 'Produits'}
             </h3>
           </div>
         </Link>

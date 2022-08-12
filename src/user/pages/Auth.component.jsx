@@ -11,6 +11,7 @@ import {
   VALIDATOR_REQUIRE,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
+import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 
 import './Auth.styles.css';
@@ -18,8 +19,7 @@ import './Auth.styles.css';
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -66,67 +66,46 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    let data;
-    setIsLoading(true);
+
     if (isLoginMode) {
       try {
-        const response = await fetch('http://localhost:5000/api/users/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        await sendRequest(
+          'http://localhost:5000/api/users/login',
+          'POST',
+          JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-        });
-
-        data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message);
-        }
-
-        auth.login();
-      } catch (err) {
-        setError(err.message || 'Une erreur inconnue est survenue!');
-      }
+          {
+            'Content-Type': 'application/json',
+          }
+        );
+      } catch (err) {}
+      auth.login();
     } else {
       try {
-        const response = await fetch('http://localhost:5000/api/users/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        await sendRequest(
+          'http://localhost:5000/api/users/signup',
+          'POST',
+          JSON.stringify({
             firstname: formState.inputs.firstname.value,
             lastname: formState.inputs.lastname.value,
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-        });
+          {
+            'Content-Type': 'application/json',
+          }
+        );
+      } catch (err) {}
 
-        data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message);
-        }
-
-        auth.login();
-      } catch (err) {
-        setError(err.message || 'Une erreur inconnue est survenue!');
-      }
+      auth.login();
     }
-    setIsLoading(false);
-  };
-
-  const errorHandler = () => {
-    setError(null);
   };
 
   return (
     <>
-      <ErrorModal error={error} onClear={errorHandler} />
+      <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>{!isLoginMode ? 'Inscription' : 'Connexion'}</h2>
