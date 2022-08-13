@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { VALIDATOR_REQUIRE } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
@@ -15,7 +15,6 @@ import Card from '../../shared/components/UIElements/Card.component';
 
 const UpdateProduct = () => {
   const productId = useParams().productId;
-  const [identifiedProduct, setIdentifierProduct] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
